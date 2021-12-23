@@ -6,7 +6,7 @@
 /*   By: yed-dyb <yed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 10:03:08 by yed-dyb           #+#    #+#             */
-/*   Updated: 2021/12/16 15:57:15 by yed-dyb          ###   ########.fr       */
+/*   Updated: 2021/12/21 13:38:38 by yed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	render_map(char **map, t_vars vars, t_Player *p, int rr)
 {
 	int		i;
 	int		j;
-	void	*img;
 
 	i = 0;
 	while (map[i])
@@ -55,6 +54,8 @@ void	render_map(char **map, t_vars vars, t_Player *p, int rr)
 				render_image(vars, "./images/coin.xpm", i, j);
 			else if (map[i][j] == 'Y' && rr)
 				render_image(vars, "./images/cop.xpm", i, j);
+			else if (map[i][j] != '0' && rr)
+				exit(1);
 			j++;
 		}
 		i++;
@@ -67,6 +68,7 @@ void	render_background(char **map, t_vars vars)
 	int		j;
 	void	*img;
 
+	i = 0;
 	while (map[i])
 	{
 		j = 0;

@@ -6,7 +6,7 @@
 /*   By: yed-dyb <yed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 21:13:49 by yed-dyb           #+#    #+#             */
-/*   Updated: 2021/12/16 19:23:57 by yed-dyb          ###   ########.fr       */
+/*   Updated: 2021/12/21 11:08:27 by yed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,27 @@ void	check_collision(t_Player *p)
 
 int	move_player(int keycode, t_Player *p)
 {
+	int	i;
+	int	j;
+
+	i = p->x;
+	j = p->y;
 	render_pixel(g_vars, p->y, p->x);
-	if (keycode == 125)
-		move_down(g_vars, g_map, p);
-	else if (keycode == 126)
-		move_up(g_vars, g_map, p);
-	else if (keycode == 123)
-		move_right(g_vars, g_map, p);
-	else if (keycode == 124)
-		move_left(g_vars, g_map, p);
+	if (keycode == 125 || keycode == 1)
+		move_down(g_map, p);
+	else if (keycode == 126 || keycode == 13)
+		move_up(g_map, p);
+	else if (keycode == 123 || keycode == 0)
+		move_right(g_map, p);
+	else if (keycode == 124 || keycode == 2)
+		move_left(g_map, p);
 	else if (keycode == 53)
+	{
+		mlx_destroy_window(g_vars.mlx, g_vars.win);
 		exit(1);
+	}
+	if (i != p->x || j != p->y)
+		g_move++;
 	check_coins_and_exit(g_vars, g_map, p);
 	check_collision(p);
 	render_map(g_map, g_vars, p, 0);
@@ -58,7 +68,7 @@ int	move_enemy(t_Player *p)
 	char	*moves;
 
 	i = 0;
-	if (g_frame == 10000)
+	if (g_frame == 3000)
 	{
 		while (i < g_enemies)
 		{
@@ -99,7 +109,7 @@ int	main(int argc, char **argv)
 	fd = open(argv[1], 2);
 	str = read_file(fd);
 	g_map = ft_split(str, '\n');
-	if (!g_map || fd < 0 || !check_is_map_valid(argv[1], g_map, g_width))
+	if (argc > 2 || !g_map || fd < 0 ||!validate_map(argv[1], g_map, g_width))
 	{
 		printf("\n\033[0;31m=> %s\n\n", "ERROR : MAP NOT VALID OR FILE NOT EXIST");
 		return (1);
@@ -113,6 +123,7 @@ int	main(int argc, char **argv)
 	mlx_key_hook(g_vars.win, move_player, &p);
 	render_map(g_map, g_vars, &p, 1);
 	mlx_loop_hook(g_vars.mlx, move_enemy, &p);
+	mlx_hook(g_vars.win, 17, 0, close_window, &g_vars);
 	mlx_loop(g_vars.mlx);
 	return (0);
 }

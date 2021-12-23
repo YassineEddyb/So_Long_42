@@ -6,7 +6,7 @@
 /*   By: yed-dyb <yed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 12:25:17 by yed-dyb           #+#    #+#             */
-/*   Updated: 2021/12/16 19:24:14 by yed-dyb          ###   ########.fr       */
+/*   Updated: 2021/12/17 10:58:18 by yed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int	check_map_components(char **map)
 
 int	check_lines(char **map)
 {
-	int	i;
-	int	line_len;
+	int		i;
+	size_t	line_len;
 
 	line_len = ft_strlen(map[0]);
 	i = 1;
@@ -84,7 +84,7 @@ int	check_lines(char **map)
 	return (1);
 }
 
-int	check_is_map_valid(char *path, char **map, int count)
+int	validate_map(char *path, char **map, int count)
 {
 	int	i;
 	int	err;

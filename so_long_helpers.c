@@ -6,7 +6,7 @@
 /*   By: yed-dyb <yed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 21:13:44 by yed-dyb           #+#    #+#             */
-/*   Updated: 2021/12/16 19:15:17 by yed-dyb          ###   ########.fr       */
+/*   Updated: 2021/12/21 11:05:10 by yed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,17 @@ char	*read_file(int fd)
 	str = NULL;
 	while (line)
 	{
+		if (line[0] == '\n')
+		{
+			printf("\n\033[0;31m=> EPMTY LINE IN THE MAP\n\n");
+			exit(1);
+		}
 		str = ft_str_join(str, line);
 		free(line);
 		line = get_next_line(fd);
 		g_width++;
 	}
+	close(fd);
 	return (str);
 }
 
@@ -59,12 +65,8 @@ void	get_player_and_enemies(char **map, t_Player *p, t_Enemy *e)
 
 void	check_coins_and_exit(t_vars vars, char **map, t_Player *p)
 {
-	int		i;
-	int		j;
 	char	*moves;
 
-	i = p->x;
-	j = p->y;
 	if (map[p->y][p->x] == 'E' && g_coins == g_total_coins)
 	{
 		printf("\n\033[0;32m=> YOU WIN\n\n");
@@ -78,8 +80,6 @@ void	check_coins_and_exit(t_vars vars, char **map, t_Player *p)
 	}
 	if (g_coins == g_total_coins)
 		g_door = "./images/open_door.xpm";
-	if (i != p->x || j != p->y)
-		g_move++;
 	moves = ft_itoa(g_move);
 	mlx_string_put(vars.mlx, vars.win, 10, 10, 0x00000000, moves);
 	free(moves);
