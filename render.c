@@ -6,7 +6,7 @@
 /*   By: yed-dyb <yed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 10:03:08 by yed-dyb           #+#    #+#             */
-/*   Updated: 2021/12/21 13:38:38 by yed-dyb          ###   ########.fr       */
+/*   Updated: 2022/01/03 17:13:50 by yed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,27 @@ void	render_map(char **map, t_vars vars, t_Player *p, int rr)
 	int		i;
 	int		j;
 
-	i = 0;
-	while (map[i])
+	i = -1;
+	while (map[++i])
 	{
-		j = 0;
-		while (map[i][j])
+		j = -1;
+		while (map[i][++j])
 		{
-			if (map[i][j] == 'P')
-				render_image(vars, g_thief, p->y, p->x);
-			else if (map[i][j] == '1' && rr)
+			if (map[i][j] == '1' && rr)
 				render_image(vars, "./images/wall.xpm", i, j);
 			else if (map[i][j] == 'E')
 				render_image(vars, g_door, i, j);
 			else if (map[i][j] == 'C' && rr)
 				render_image(vars, "./images/coin.xpm", i, j);
-			else if (map[i][j] == 'Y' && rr)
-				render_image(vars, "./images/cop.xpm", i, j);
-			else if (map[i][j] != '0' && rr)
+			else if (map[i][j] != '0' && map[i][j] != 'Y' && \
+				map[i][j] != 'P' && rr)
+			{
+				printf("\n\033[0;31m=> %s\n\n", "ERROR : MAP NOT VALID");
 				exit(1);
-			j++;
+			}
 		}
-		i++;
 	}
+	render_image(vars, g_thief, p->y, p->x);
 }
 
 void	render_background(char **map, t_vars vars)

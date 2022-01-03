@@ -6,7 +6,7 @@
 /*   By: yed-dyb <yed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 21:13:44 by yed-dyb           #+#    #+#             */
-/*   Updated: 2021/12/21 11:05:10 by yed-dyb          ###   ########.fr       */
+/*   Updated: 2022/01/03 17:14:13 by yed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*read_file(int fd)
 	{
 		if (line[0] == '\n')
 		{
-			printf("\n\033[0;31m=> EPMTY LINE IN THE MAP\n\n");
+			printf("\n\033[0;31m=> ERROR : EPMTY LINE IN THE MAP\n\n");
 			exit(1);
 		}
 		str = ft_str_join(str, line);
@@ -67,19 +67,19 @@ void	check_coins_and_exit(t_vars vars, char **map, t_Player *p)
 {
 	char	*moves;
 
+	if (map[p->y][p->x] == 'C')
+	{
+		g_coins++;
+		map[p->y][p->x] = 48;
+		render_pixel(vars, p->y, p->x);
+	}
+	if (g_coins == g_total_coins)
+		g_door = "./images/open_door.xpm";
 	if (map[p->y][p->x] == 'E' && g_coins == g_total_coins)
 	{
 		printf("\n\033[0;32m=> YOU WIN\n\n");
 		exit(1);
 	}
-	if (map[p->y][p->x] == 'C')
-	{
-		g_coins++;
-		map[p->y][p->x] = 0;
-		render_pixel(vars, p->y, p->x);
-	}
-	if (g_coins == g_total_coins)
-		g_door = "./images/open_door.xpm";
 	moves = ft_itoa(g_move);
 	mlx_string_put(vars.mlx, vars.win, 10, 10, 0x00000000, moves);
 	free(moves);
