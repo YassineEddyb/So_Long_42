@@ -16,7 +16,7 @@ Clone this repository and run **make**
 
 ```git clone https://github.com/YassineEddyb/So_Long_42```
 
-Then execute so_long file with any map in the maps folder
+Then execute so_long file with any map in the maps folder for example :
 
 ```./so_long maps/maze.ber```
 
