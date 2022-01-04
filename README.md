@@ -14,11 +14,15 @@ https://harm-smits.github.io/42docs/libs/minilibx
 
 Clone this repository and run **make**
 
-```git clone https://github.com/YassineEddyb/So_Long_42```
+```
+git clone https://github.com/YassineEddyb/So_Long_42
+```
 
 Then execute so_long file with any map in the maps folder for example :
 
-```./so_long maps/maze.ber```
+```
+./so_long maps/maze.ber
+```
 
 <h3>Image from project</h3>
 <img src="so_long.png">
