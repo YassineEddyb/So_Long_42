@@ -19,3 +19,6 @@ Clone this repository and run **make**
 Then execute so_long file with any map in the maps folder
 
 ```./so_long maps/maze.ber```
+
+<h3>Image from project</h3>
+<img src="so_long.png">
